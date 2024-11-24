@@ -11,6 +11,7 @@ def rescale(img, factor):
     height = int(img.shape[1] * factor)
     return cv2.resize(img, (width, height))
 
+
 # TODO: Incorporate vertical stacking
 def join_images(*images, horizontal=True):
     img_tuple = ()
@@ -41,7 +42,8 @@ canny = cv2.Canny(gray_blur, cannyThresh1, cannyThresh2)
 
 # find best circle and mask grayscale image using it
 circles = cv2.HoughCircles(
-    gray_blur, cv2.HOUGH_GRADIENT, 1, 200, minRadius=100, maxRadius=300)
+    gray_blur, cv2.HOUGH_GRADIENT, 1, 200, minRadius=100, maxRadius=300
+)
 circles = np.uint16(np.around(circles))
 best_circle = circles[0][0]
 mask = np.zeros_like(gray_blur)
@@ -49,7 +51,8 @@ cv2.circle(mask, (best_circle[0], best_circle[1]), best_circle[2], 1, -1)
 masked = gray * mask
 
 thresh = cv2.adaptiveThreshold(
-    masked, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+    masked, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 2
+)
 kernel = np.ones((3, 3), np.uint8)
 thresh = cv2.erode(thresh, kernel)
 thresh = cv2.Canny(thresh, 100, 200)
@@ -57,7 +60,7 @@ thresh = cv2.Canny(thresh, 100, 200)
 cv2.imshow("image", join_images(img, gray, masked, canny, thresh))
 
 while True:
-    if cv2.waitKey(50) == ord('q'):
+    if cv2.waitKey(50) == ord("q"):
         break
 
 cv2.destroyAllWindows()

@@ -33,7 +33,7 @@ img_boxed = cv2.putText(
     bottomLeftOrigin=False,
 )
 
-# cv2.imshow('image', img_boxed)
+cv2.imshow("image", img_boxed)
 
 # cv2.imshow('clock', img_boxed)
 # cv2.waitKey(0)
